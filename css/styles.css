@@ -1,0 +1,268 @@
+/*Defaults*********************************************************/
+* {
+  margin: 0;
+  padding: 0; }
+
+html, body {
+  background-color: #DBD1BF;
+  height: 100%; }
+
+html {
+  -ms-touch-action: manipulation;
+  touch-action: manipulation; }
+
+P {
+  font-family: "Garamond", sans-serif;
+  font-size: 1.2rem;
+  color: #444; }
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0; }
+
+.clearfix {
+  display: inline-table; }
+
+* html .clearfix {
+  height: 1%; }
+
+.clearfix {
+  display: block; }
+
+body {
+  font-size: 5vmin;
+  position: relative;
+}
+
+/* Vertical Menu *********************************************************/
+.verticalMenu {
+  position: fixed;
+  width: 175px;
+  height: 100%;
+  right: -175px;
+  top: 0;
+  z-index: 900;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  padding-top: 4rem; }
+  .verticalMenu a {
+    color: #444;
+    background-color: #AFC4DB;
+    display: block;
+    height: 4rem;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.5rem;
+    font-family: "Georgia", cursive; }
+
+  .verticalMenu .activeTab {
+    background-color: #FBF8D3; }
+  @media screen and (min-width: 500px) {
+    .verticalMenu {
+      display: none; } }
+
+.OpenverticalMenu {
+  right: 0px;
+  background-color: #7C7A68; }
+
+/* Page Wrapper *********************************************************/
+#pageWrapper {
+  position: relative;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  transition: all 0.5s ease; }
+
+#pageWrapper.pageWrapperPushedLeft {
+  left: -175px; }
+  #pageWrapper.pageWrapperPushedLeft footer {
+    left: -175px; }
+  #pageWrapper.pageWrapperPushedLeft .appTitle {
+    left: -175px; }
+  @media screen and (min-width: 500px) {
+    #pageWrapper.pageWrapperPushedLeft {
+      left: 0; }
+      #pageWrapper.pageWrapperPushedLeft footer {
+        left: 0; }
+      #pageWrapper.pageWrapperPushedLeft .appTitle {
+        left: 0; } }
+/* All pages *********************************************************/
+[data-role="page"] {
+  color: #444;
+  background-color: #E5F2FF;
+  padding: 1rem;
+  margin: 0rem;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 3.5rem;
+  left: 0;
+  visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d; }
+  @media screen and (min-width: 500px) {
+      [data-role="page"] {
+            top: 6.5rem;
+            padding-bottom: 5rem; }
+      [data-role="page"] canvas {
+            padding-bottom: 4rem; } }
+      [data-role="page"] .container {
+            width: 90%; }
+      [data-role="page"] h2 {
+            padding-bottom: 0.5rem;
+            font-size: 1.3rem;
+            font-family: "Garamond", sans-serif; }
+
+      [data-role="page"].activePage {
+            visibility: visible;
+            z-index: 1; }
+
+
+
+/* Header *********************************************************/
+
+.appTitle {
+  position: fixed;
+  background-color: #3B628F;
+  width: 100%;
+  left: 0;
+  top: 0;
+  height: 3.5rem;
+  z-index: 2;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  transition: all 0.5s ease; }
+  .appTitle h1 {
+    box-sizing: border-box;
+    padding: 0.5rem;
+    text-align: center;
+    font-family: "Georgia", cursive;
+    font-size: 1.5rem;
+    color: #DBD1BF;
+    letter-spacing: 2px;
+    display: inline;
+    width: 80%;
+    float: left; }
+    @media screen and (min-width: 500px) {
+      .appTitle h1 {
+        width: 100%; } }
+
+#toggle-menu {
+  display: inline;
+  padding: 0;
+  width: 60px;
+  height: 50px;
+  float: right; }
+  #toggle-menu #X {
+    opacity: 0; }
+  #toggle-menu #line3 {
+    opacity: 1; }
+  @media screen and (min-width: 500px) {
+    #toggle-menu {
+      display: none; } }
+
+#toggle-menu.x-toggle-menu #X {
+  opacity: 1; }
+#toggle-menu.x-toggle-menu #line3 {
+  opacity: 0; }
+
+/* Horizontal Menu *********************************************************/
+.navBar {
+  position: fixed;
+  width: 100%;
+  top: 3.5rem;
+  display: none;
+  height: 3rem;
+  z-index: 2; }
+  .navBar ul {
+    list-style: none;
+    margin: 0;
+    background-color: #FBF8D3;
+    width: 100%; }
+  .navBar li {
+    float: left;
+    height: 3rem;
+    width: 50%; }
+  .navBar .button {
+    color: #484848;
+    background-color: #AFC4DB;
+    display: block;
+    height: 3rem;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.3rem;
+    font-family: "Georgia", cursive; }
+  .navBar .button.activeTab {
+    background-color: #E5F2FF; }
+  @media screen and (min-width: 500px) {
+    .navBar {
+      display: block; } }
+
+/* SVG Icons *********************************************************/
+
+svg {
+  width: 25px;
+  height: 25px;
+  padding-top: 5px; }
+
+.activeTab #Home {
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  transform: scale(1.1); }
+  .activeTab #Home #door {
+    fill: black; }
+  .activeTab #Home #triangle {
+    fill: black; }
+
+.activeTab #location-pin {
+  -webkit-transform: rotate(-25deg) scale(1.1);
+  -moz-transform: rotate(-25deg) scale(1.1);
+  -o-transform: rotate(-25deg) scale(1.1);
+  transform: rotate(-25deg) scale(1.1); }
+  .activeTab #location-pin #arrow {
+    fill: black; }
+
+.activeTab #contact1 {
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  transform: scale(1.1); }
+  .activeTab #contact1 #body {
+    fill: black; }
+
+/* Footer *********************************************************/
+.footer {
+  background-color: #3B628F;
+  margin: 0rem;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  height: 3rem;
+  z-index: 1000;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  transition: all 0.5s ease; }
+  .footer P {
+    text-align: center;
+    padding-top: 17px;
+    color: #DBD1BF;}
+
+
