@@ -10,6 +10,7 @@ var midterm_gere0018 = {
     numPages:0,
     lists:[],
     numLists:0,
+    listview: "",
     initialize: function() {
       midterm_gere0018.bindEvents();
     },
@@ -121,7 +122,7 @@ var midterm_gere0018 = {
     },
 
     contactsSuccess: function (contacts){
-        var contactsOutput = document.querySelector("#contactsOutput");
+        listview = document.querySelector("[data-role=listview]");
 //         for( var i=0; i<contacts.length; i++){
 //            contactsOutput.innerHTML = "<li [data-ref="i"]>" + contacts[i].displayName
 //                                        + contacts[i].phoneNumbers[0] + "</li>";
@@ -129,25 +130,42 @@ var midterm_gere0018 = {
 //        var contactPhoneNumbers = document.querySelector('#contactPhoneNumbers');
 //        contactName.value = contacts[i].displayName;
 //        contactPhoneNumbers.value = contacts[i].phoneNumbers[0];
-        var listItem = document.querySelectorAll('[data-ref^="li-"]');
-         for( var i=0; i<listItem.length; i++){
-             var hammerListItem = new Hammer(listItem[i]);
-             hammerListItem.on('doubletap', midterm_gere0018.displayLocation);
-             hammerListItem.on('tap', midterm_gere0018.displayContact);
+          var listItems = document.querySelectorAll('[data-ref^="li-"]');
+         for( var i=0; i<listItems.length; i++){
+            var hammerListItem = new Hammer.Manager(listItems[i], {});
+            var singleTap = new Hammer.Tap({ event: 'singletap' });
+            var doubleTap = new Hammer.Tap({event: 'doubletap', taps: 2 });
+            hammerListItem.add([doubleTap, singleTap]);
+            doubleTap.recognizeWith(singleTap);
+            singleTap.requireFailure([doubleTap]);
+            hammerListItem.on('doubletap', midterm_gere0018.displayContactLocation);
+            hammerListItem.on('singletap', midterm_gere0018.displayContact);
 
          }
 
 
 
     },
-   displayContact: function(contacts){
+    displayContactLocation: function(){
+        var overlay = document.querySelector('[data-role=overlay]');
+        var contactsMap = document.querySelector("#contactsMap");
+        overlay.style.display = "block";
+        var mapOptions ={
+          center:new google.maps.LatLng(45.348247,-75.756086),
+          zoom:8,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        contactsMap.style.display = "block";
+        var map1 =new google.maps.Map(contactsMap, mapOptions);
+
+    },
+    displayContact: function(contacts){
       console.log("contact display");
-       var modal = document.querySelector('[data-role= modal]');
        var overlay = document.querySelector('[data-role=overlay]');
+       var modal = document.querySelector('[data-role= modal]');
        var ok = document.querySelector('#btnOk');
        var contactName = document.querySelector('#contactName');
        var contactPhoneNumbers = document.querySelector('#contactPhoneNumbers');
-       contactName.value =
        overlay.style.display = "block";
        modal.style.display = "block";
        var hammerOk = new Hammer(ok);
@@ -170,12 +188,24 @@ var midterm_gere0018 = {
           zoom:14,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        var mapContainer = document.getElementById("mapContainer");
+        var mapContainer = document.querySelector(".mapContainer");
         //call the constructor function for the google Maps Object
         var map =new google.maps.Map(mapContainer, mapOptions);
 
-
    },
+//    displayLocation: function(){
+//        //hide contacts listview
+//       listview.style.display = "none";
+//        //display map container
+//        var contactsMap = document.querySelector(".contactsMap");
+//        var mapOptions ={
+//          center:new google.maps.LatLng(45.348247,-75.756086),
+//          zoom:14,
+//          mapTypeId: google.maps.MapTypeId.ROADMAP
+//        };
+//        var map =new google.maps.Map(contactsMap, mapOptions);
+//
+//    },
     //contacts error fucntion
     contactsError:function (){
         alert("sorry !! we are not able to load your contact right now!!")
