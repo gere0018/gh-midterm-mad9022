@@ -49,7 +49,6 @@ body {
 [data-role="page"] {
   color: #444;
   background-color: #E5F2FF;
-  padding: 1rem;
   margin: 0rem;
   position: absolute;
   width: 100%;
@@ -164,18 +163,18 @@ svg {
 /* contacts page *********************************************************/
 [data-role=listview]{
   list-style:none;
-  width: 90%;
+  width: 100%;
 }
 [data-role=listview] li{
   font-size:1.2rem;
+  padding: 0 0.5rem;
   line-height:3rem;
-  width: 90%;
+  width: 100%;
   height:3rem;
   border:1px solid #3B628F;
   background-color:#DBD1BF;
   color:#3B628F;
   font-weight:300;
-  padding:0 1rem;
   cursor:pointer;
 }
 [data-role=overlay]{
@@ -203,6 +202,19 @@ svg {
   box-shadow:1px 1px 2px rgb(0,0,0);
   display: none;
 }
+/* Location page *********************************************************/
+#mapContainer{
+   margin: 2%;
+    width: 100%;
+    height: 100%;
+
+}
+/*
+.gm-style{
+    width:95%;
+    height:72 %;
+}
+*/
 
 /* Footer *********************************************************/
 .footer {

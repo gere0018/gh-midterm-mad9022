@@ -1,33 +1,43 @@
-//TODO:add hammer.js instead of handle touch and handle nav and get it functional in spite of event .current target.
-//TODO:js create UL with max 12 li and loop through contacts and display them in it.
+//TODO:[x] add hammer.js instead of handle touch and handle nav and get it functional in spite of event .current target.
+//TODO: [x]js create UL with max 12 li and loop through contacts and display them in it.
 //TODO: add all contacts to local storage. save contact info as object use JSON.
 //TODO: add a dynamic map, register and get key.
-//TODO:create modal window that will display contact info.
+//TODO: [x]create modal window that will display contact info.
 //TODO: double tap list view goes to map view, markers, contacts lat and long
 //TODO: create back button functionality.
-var app1_gere0018 = {
+var midterm_gere0018 = {
     pages:[],
     numPages:0,
     lists:[],
     numLists:0,
     initialize: function() {
-      app1_gere0018.bindEvents();
+      midterm_gere0018.bindEvents();
     },
     bindEvents: function() {
-      //document.addEventListener('deviceready', app1_gere0018.onDeviceReady, false);
-      document.addEventListener("DOMContentLoaded", app1_gere0018.onDomReady, false);
+      //document.addEventListener('deviceready', midterm_gere0018.onDeviceReady, false);
+      document.addEventListener("DOMContentLoaded", midterm_gere0018.onDomReady, false);
     },
-//    onDeviceReady: function() {
-//        //When device is ready read the contacts on the device
-//     var options = new ContactFindOptions( );
-//        options.filter = "";  //leaving this empty will find return all contacts
-//        options.multiple = true;  //return multiple results
-//        var filter = ["displayName"];
-//        navigator.contacts.find(filter, app1_gere0018.contactsSuccess, app1_gere0018.contactsError, options);
-//    },
+    onDeviceReady: function() {
+        //When device is ready read the contacts on the device
+     var options = new ContactFindOptions( );
+        options.filter = "";  //leaving this empty will find return all contacts
+        options.multiple = true;  //return multiple results
+        var filter = ["displayName"];
+        navigator.contacts.find(filter, midterm_gere0018.contactsSuccess,
+                                midterm_gere0018.contactsError, options);
+        //find the user's location
+        if( navigator.geolocation ){
+        var getLocation = {enableHighAccuracy: false, timeout:60000, maximumAge:60000};
+        navigator.geolocation.getCurrentPosition( midterm_gere0018.reportPosition,
+                                                 app1_gere0018.gpsError, getLocation);
+        //If it doesn't alert the user with the following message.
+        }else{
+            alert("OOPS!! your browser needs to be updated and currently does not support location based services.")
+        }
+    },
     // Update DOM on a Received Event
     onDomReady: function(id) {
-      app1_gere0018.prepareNavigation();
+      midterm_gere0018.prepareNavigation();
     },
 
     prepareNavigation:function(){
@@ -39,22 +49,21 @@ var app1_gere0018 = {
         //loop through my lists and add hammer
 	   for(var i=0;i<numLists; i++){
            var hammerLists = new Hammer(lists[i]);
-           hammerLists.on('tap', app1_gere0018.handleNav);
+           hammerLists.on('tap', midterm_gere0018.handleNav);
             //FUTURE:add listener to browser's back button
 
         }
          //load the first page with url=null
-           app1_gere0018.loadPage(null);
+           midterm_gere0018.loadPage(null);
          //FUTURE: remove this when testing on device. temp for browser testing.
-           app1_gere0018.contactsSuccess;
+           midterm_gere0018.contactsSuccess();
 
     },
     handleNav:function (ev){
         ev.preventDefault();// preventing page reload
         var href = ev.target.href;
         var parts = href.split("#");//returns an array with 2 strings, the string before # and the string after the #.
-        app1_gere0018.loadPage( parts[1] );
-        app1_gere0018.contactsSuccess;
+        midterm_gere0018.loadPage( parts[1] );
         return false;
 
     },
@@ -79,9 +88,9 @@ var app1_gere0018 = {
                     setTimeout(function(){
                         window.scrollTo(0,0);
                     },100);
-//                      if(pages[i].id == "location"){
-//                      app1_gere0018.setLocation();
-//                      }
+                      if(pages[i].id == "location"){
+                      midterm_gere0018.displayLocation();
+                      }
 
                 history.pushState(null, null, "#" + url);
                 }else{
@@ -108,39 +117,81 @@ var app1_gere0018 = {
                   }
 
             }
-            app1_gere0018.contactsSuccess;
 
     },
 
-    contactsSuccess: function (){
-        console.log("success");
+    contactsSuccess: function (contacts){
         var contactsOutput = document.querySelector("#contactsOutput");
-         //for( var i=0; i<contacts.length; i++){
-           // contactsOutput.innerHTML = "<li [data-ref="i"]>" + deviceContacts[i].displayName
-                                        //+ "</li>";
+//         for( var i=0; i<contacts.length; i++){
+//            contactsOutput.innerHTML = "<li [data-ref="i"]>" + contacts[i].displayName
+//                                        + contacts[i].phoneNumbers[0] + "</li>";
+//        var contactName = document.querySelector('#contactName');
+//        var contactPhoneNumbers = document.querySelector('#contactPhoneNumbers');
+//        contactName.value = contacts[i].displayName;
+//        contactPhoneNumbers.value = contacts[i].phoneNumbers[0];
         var listItem = document.querySelectorAll('[data-ref^="li-"]');
          for( var i=0; i<listItem.length; i++){
              var hammerListItem = new Hammer(listItem[i]);
-             hammerListItem.on('tap', app1_gere0018.displayContact);
-             hammerListItem.on('doubletap', app1_gere0018.displayLocation);
+             hammerListItem.on('doubletap', midterm_gere0018.displayLocation);
+             hammerListItem.on('tap', midterm_gere0018.displayContact);
+
          }
 
 
 
     },
-   displayContact: function(){
+   displayContact: function(contacts){
       console.log("contact display");
+       var modal = document.querySelector('[data-role= modal]');
+       var overlay = document.querySelector('[data-role=overlay]');
+       var ok = document.querySelector('#btnOk');
+       var contactName = document.querySelector('#contactName');
+       var contactPhoneNumbers = document.querySelector('#contactPhoneNumbers');
+       contactName.value =
+       overlay.style.display = "block";
+       modal.style.display = "block";
+       var hammerOk = new Hammer(ok);
+       hammerOk.on('tap', function(){
+            overlay.style.display = "none";
+            modal.style.display = "none";
+
+       });
 
    },
+     //success function
+    reportPosition:function( position ){
+         midterm_gere0018.displayLocation();
+        },
+
     displayLocation: function(){
-       alert(this);
+        //create map options object
+        var mapOptions ={
+          center:new google.maps.LatLng(45.348247,-75.756086),
+          zoom:14,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var mapContainer = document.getElementById("mapContainer");
+        //call the constructor function for the google Maps Object
+        var map =new google.maps.Map(mapContainer, mapOptions);
+
 
    },
+    //contacts error fucntion
     contactsError:function (){
         alert("sorry !! we are not able to load your contact right now!!")
 
-    }
+    },
+    //location error function
+    gpsError:function ( error ){
+      var errors = {
+        1: 'Permission denied',
+        2: 'Position unavailable',
+        3: 'Request timeout'
+      };
+ //in case of erros the following function gives an explanation of type of error to the user.
+      alert("Error: " + errors[error.code]);
+    },
 
  };
 
-app1_gere0018.initialize();
+midterm_gere0018.initialize();

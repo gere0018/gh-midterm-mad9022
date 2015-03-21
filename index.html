@@ -47,6 +47,7 @@
 <polygon id="arrow" fill="#336699" stroke="#000000" stroke-width="5" stroke-miterlimit="10" points="110.9,234.6 196.8,389.8
 	267.9,232.4 "/>
 </svg>
+
                 Location</a></li>
         </ul>
     </nav>
@@ -76,25 +77,22 @@
             <h3>Contact Info</h3>
             <form>
               <div class="formBox">
-                <input type="text" id="name" name="name" class="lg"/>
-                  <input type="text" id="phoneNumbers" name="phoneNumbers" class="lg"/>
+                <input type="text" id="contactName" name="contactName"/>
+                <input type="text" id="contactPhoneNumbers" name="contactPhoneNumbers"/>
               </div>
               <div class="formBox">
-                <input type="button" id="btnEdit" value="Edit" class="btn"/>
-                <input type="button" id="btnSave" value="Save" class="btn"/>
+                <input type="button" id="btnOk" value="OK" class="btn"/>
               </div>
             </form>
           </div>
 
   <!--Page # 2 Location *************************************************-->
         <section id = "location" data-role = "page">
-                <div id="output">
+                <div id="mapContainer">
                     <p id = "waitMsg">Please wait while we Identify your location!!</p>
                     <p id = "msg"></p>
-                    <canvas height="300px" width="300px">
-                    </canvas>
 
-            </div>
+               </div>
         </section>
 
      <!--Footer*************************************************************-->
@@ -106,6 +104,9 @@
 <!--Script*************************************************************-->
 <!--    //Future: <script type="text/javascript" src="cordova.js"></script>-->
     <script src="js/hammer.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?
+                 key=AIzaSyAG3relfxcFyKgaC-0dV-LEjt2oFUM04vI=true">
+    </script>
     <script src="js/script.js"></script>
 
 </body>
