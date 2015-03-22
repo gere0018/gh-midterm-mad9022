@@ -1,7 +1,7 @@
 //TODO:[x] add hammer.js instead of handle touch and handle nav and get it functional in spite of event .current target.
 //TODO: [x]js create UL with max 12 li and loop through contacts and display them in it.
 //TODO: add all contacts to local storage. save contact info as object use JSON.
-//TODO: add a dynamic map, register and get key.
+//TODO: [x]add a dynamic map, register and get key.
 //TODO: [x]create modal window that will display contact info.
 //TODO: double tap list view goes to map view, markers, contacts lat and long
 //TODO: create back button functionality.
@@ -131,7 +131,7 @@ var midterm_gere0018 = {
 //        contactName.value = contacts[i].displayName;
 //        contactPhoneNumbers.value = contacts[i].phoneNumbers[0];
           var listItems = document.querySelectorAll('[data-ref^="li-"]');
-         for( var i=0; i<listItems.length; i++){
+         for( var i=0; i<13; i++){
             var hammerListItem = new Hammer.Manager(listItems[i], {});
             var singleTap = new Hammer.Tap({ event: 'singletap' });
             var doubleTap = new Hammer.Tap({event: 'doubletap', taps: 2 });
