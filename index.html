@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/page-transitions.css">
 </head>
-    <body>
+<body>
 
 
  <div id = "pageWrapper">
 <!--Header************************************************************-->
 
     <header class = "clearfix appTitle">
+        <img alt = "back button" id = "backBtn" src = "img/back_2.png"/>
         <h1>App Name</h1>
     </header>
 
@@ -83,17 +84,13 @@
 
             </form>
           </div>
-     <!--Map container *********-->
-     <div id = "contactsMap" >
-         </div>
+
 
   <!--Page # 2 Location *************************************************-->
         <section id = "location" data-role = "page">
-                <div class ="mapContainer">
-                    <p id = "waitMsg">Please wait while we Identify your location!!</p>
-                    <p id = "msg"></p>
-
-               </div>
+             <!--Map container *********-->
+             <div id = "contactsMap" >
+                 </div>
         </section>
 
      <!--Footer*************************************************************-->
@@ -103,7 +100,7 @@
 
 </div>
 <!--Script*************************************************************-->
-<!--    //Future: <script type="text/javascript" src="cordova.js"></script>-->
+    <script type="text/javascript" src="cordova.js"></script>
     <script src="js/hammer.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?
                  key=AIzaSyAG3relfxcFyKgaC-0dV-LEjt2oFUM04vI=true">

@@ -95,9 +95,8 @@ body {
     font-size: 1.5rem;
     color: #DBD1BF;
     letter-spacing: 2px;
-    display: inline;
-    width: 100%;
-    float: left; }
+    display: inline-block;
+    width: 100%;}
 /* Horizontal Menu *********************************************************/
 .navBar {
   position: fixed;
@@ -118,7 +117,6 @@ body {
   .navBar .button {
     color: #484848;
     background-color: #AFC4DB;
-    background-image: url("img/location.svg");
     display: block;
     height: 3rem;
     text-decoration: none;
@@ -213,32 +211,30 @@ svg {
     margin: 5% 0;
 
 }
+#backBtn{
+    display: none;
+    width: 7%;
+    height:52%;
+    padding-left: 1rem;
+}
+.movedH1{
+    text-align: right;
+    width: 80%;
+
+}
 
 #btnOk{
    width: 20%;
-    height: 50%;
+    height: 20%;
 }
 #contactsMap{
-    width: 340px;
-    height: 620px;
-    margin: 10px;
-    top:6rem;
-    background-color: hotpink;
+    width: 96%;
+    height: 75%;
+    margin: 2%;
     z-index:20;
+    border: 1px solid #3B628F;
     display: none;
 }
-/* Location page *********************************************************/
-.mapContainer{
-   margin: 2%;
-    width: 100%;
-    height: 100%;
-}
-/*
-.gm-style{
-    width:95%;
-    height:72 %;
-}
-*/
 
 /* Footer *********************************************************/
 .footer {
