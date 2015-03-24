@@ -1,10 +1,5 @@
-//TODO:[x] add hammer.js instead of handle touch and handle nav and get it functional in spite of event .current target.
-//TODO: [x]js create UL with max 12 li and loop through contacts and display them in it.
+
 //TODO: add all contacts to local storage. save contact info as object use JSON.
-//TODO: [x]add a dynamic map, register and get key.
-//TODO: [x]create modal window that will display contact info.
-//TODO: double tap list view goes to map view, markers, contacts lat and long
-//TODO: create back button functionality.
 var midterm_gere0018 = {
     pages:[],
     numPages:0,
@@ -41,6 +36,14 @@ var midterm_gere0018 = {
     // Update DOM on a Received Event
     onDomReady: function(id) {
       midterm_gere0018.prepareNavigation();
+         if( navigator.geolocation ){
+        var getLocation = {enableHighAccuracy: false, timeout:60000, maximumAge:60000};
+        navigator.geolocation.getCurrentPosition( midterm_gere0018.reportPosition,
+                                                 midterm_gere0018.gpsError, getLocation);
+        //If it doesn't alert the user with the following message.
+        }else{
+            alert("OOPS!! your browser needs to be updated and currently does not support location based services.")
+        }
     },
 
     prepareNavigation:function(){
@@ -55,12 +58,12 @@ var midterm_gere0018 = {
            hammerLists.on('tap', midterm_gere0018.handleNav);
 
         }
-           //add listener to browser's back button
+          //add listener to hardware's back button
           window.addEventListener("popstate", midterm_gere0018.browserBackButton, false);
          //load the first page with url=null
            midterm_gere0018.loadPage(null);
          //FUTURE: remove this when testing on device. temp for browser testing.
-           //midterm_gere0018.contactsSuccess();
+           midterm_gere0018.contactsSuccess();
 
     },
     handleNav:function (ev){
@@ -88,7 +91,6 @@ var midterm_gere0018 = {
                 //In Page:for the selected page to become active page
               if(pages[i].id == url){
                   pages[i].className = "activePage pt-page-rotateInNewspaper pt-page-delay500";
-
                     setTimeout(function(){
                         window.scrollTo(0,0);
                     },100);
@@ -135,7 +137,7 @@ var midterm_gere0018 = {
           }
       }
       for(var t=0; t < numLists; t++){
-        links[t].classList.remove("activeTab");
+        lists[t].classList.remove("activeTab");
         if(lists[t].href == window.location.href){
           lists[t].classList.add("activeTab");
         }
@@ -146,7 +148,7 @@ var midterm_gere0018 = {
         contacts = contactsList;
         listview = document.querySelector("[data-role=listview]");
          for( var i=0; i<12; i++){
-            listview.innerHTML += "<li data-ref= " + i + ">" + contacts[i].displayName + "</li>";
+//            listview.innerHTML += "<li data-ref= " + i + ">" + contacts[i].displayName + "</li>";
             var hammerlistview = new Hammer.Manager(listview);
             var singleTap = new Hammer.Tap({ event: 'singletap' });
             var doubleTap = new Hammer.Tap({event: 'doubletap', taps: 2 });
@@ -156,18 +158,15 @@ var midterm_gere0018 = {
             hammerlistview.on('doubletap', midterm_gere0018.displayContactLocation);
             hammerlistview.on('singletap', midterm_gere0018.displayContact);
 
-             //save contacts to local storage
+             //save contacts info to local storage
             if( 'localStorage' in window ){
-//                if("!Lat"){
-//                    var Latitude = ;
-//
-//                }
-                localStorage.setItem({"Id": i,
-                                     "Name" : JSON.stringify(contacts[i].displayName),
-                                     "Numbers": JSON.stringify(contacts[i].phoneNumbers),
-                                     "Lat": "",
-                                     "Long": ""});
-
+                localStorage.setItem("Id", i);
+                //JSON.stringify(contacts[i].displayName);
+                localStorage.setItem("Name", "Nehmat");
+                //JSON.stringify(contacts[i].phoneNumbers)
+                localStorage.setItem("Numbers", "6138544634" );
+                //localStorage.removeItem("Lat");
+                //localStorage.removeItem("Long");
             }
 
          }
@@ -181,39 +180,86 @@ var midterm_gere0018 = {
         var backBtn = document.querySelector("#backBtn");
         var H1 = document.querySelector("h1");
         backBtn.style.display = "inline-block";
-        H1.classList.add("moveH1");
+        H1.setAttribute("id", "movedH1");
         var hammerBackBtn = new Hammer( backBtn);
         hammerBackBtn.on("tap", midterm_gere0018.browserBackButton);
-        pages[0].classList.remove("activePage");
-        pages[1].classList.add("activePage");
-        var mapOptions ={
-          center:new google.maps.LatLng(45.348247,-75.756086),
-          zoom:8,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        contactsMap.style.display = "block";
-        var map1 =new google.maps.Map(contactsMap, mapOptions);
+
+        //clear all existing markers.
+         if(marker){
+             marker.setMap(null);
+         };
+
+        if(localStorage.getItem("Lat") !== null && localStorage.getItem("Long") !== null){
+            var myLatlng = new google.maps.LatLng(localStorage.getItem("Lat"),localStorage.getItem("Long"));
+            var mapOptions ={
+              center:myLatlng,
+              zoom:14,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+              pages[0].classList.remove("activePage");
+              pages[1].classList.add("activePage");
+//            contactsMap.style.display = "block";
+//            listview.style.display = "none";
+            var map =new google.maps.Map(contactsMap, mapOptions);
+              //add animated marker in center of the map.
+            var marker = new google.maps.Marker({
+                  position: myLatlng,
+                  map: map,
+                  animation: google.maps.Animation.DROP,
+                  title: 'user position'
+              });
+
+        }else{
+             //if there is no saved value for longitude and latitude in local storage,
+            //display msg to user
+            var msgBox = document.querySelector("#msgBox");
+            msgBox.style.display = "block";
+            var overlay = document.querySelector('[data-role=overlay]');
+            overlay.style.display = "block";
+            //ok button allows user to go back to map
+            var ok2 = document.querySelector("#btnOk2");
+            var hammerOk2 = new Hammer(ok2);
+            hammerOk2.on('tap', function(){
+                msgBox.style.display = "none";
+                overlay.style.display = "none";
+                var mapOptions ={
+                  center:new google.maps.LatLng(37.7699298, -122.4469157),
+                  zoom:8,
+                  mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                  contactsMap = document.querySelector("#contactsMap");
+//                  contactsMap.style.display = "block";
+//                  listview.style.display = "none";
+                pages[0].classList.remove("activePage");
+                pages[1].classList.add("activePage");
+                  var map =new google.maps.Map(contactsMap, mapOptions);
+                 var hammerAddLatLong = new Hammer(map);
+                hammerAddLatLong.on('doubletap', midterm_gere0018.addLatLong);
+
+            });
+        }
 
     },
     displayContact: function(ev){
-      console.log("contact display");
        var overlay = document.querySelector('[data-role=overlay]');
        var modal = document.querySelector('[data-role= modal]');
        var ok = document.querySelector('#btnOk');
        var contactName = document.querySelector('#contactName');
        var contactPhoneNumbers = document.querySelector('#contactPhoneNumbers');
-        console.log(ev.target);
        var i = ev.target.getAttribute("data-ref");
-       contactName.value = contacts[i].displayName;
-       if(contacts[i].phoneNumbers){
-            for(var j=0; j<contacts[i].phoneNumbers.length; j++){
-               contactPhoneNumbers.value += contacts[i].phoneNumbers[j].value + "</br>";
-            }
-
-       }else{
-            contactPhoneNumbers.value = "";
-         }
-
+        //FUTURE: change when testing on device
+        //contacts[i].displayName
+       contactName.value = localStorage["Name"];
+//       if(contacts[i].phoneNumbers){
+//            for(var j=0; j<contacts[i].phoneNumbers.length; j++){
+//               contactPhoneNumbers.value += contacts[i].phoneNumbers[j].value + "</br>";
+//            }
+//
+//       }else{
+           // contactPhoneNumbers.value = "";
+//         }
+        //FUTURE:comment line below for device
+       contactPhoneNumbers.value = localStorage["Numbers"];
        overlay.style.display = "block";
        modal.style.display = "block";
        var hammerOk = new Hammer(ok);
@@ -227,19 +273,26 @@ var midterm_gere0018 = {
      //success function
     reportPosition:function( position ){
         midterm_gere0018.displayLocation(position);
-        midterm_gere0018.displayContactLocation(position);
-        },
+        //midterm_gere0018.displayContactLocation(position);
+   },
 
-    displayLocation: function(){
+    displayLocation: function(position){
         //create map options object
+        var myLatlng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
         var mapOptions ={
-          center:new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
-          zoom:8,
+          center:myLatlng,
+          zoom:14,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
           contactsMap = document.querySelector("#contactsMap");
         contactsMap.style.display = "block";
-        var map1 =new google.maps.Map(contactsMap, mapOptions);
+        var map =new google.maps.Map(contactsMap, mapOptions);
+        var marker = new google.maps.Marker({
+              position: myLatlng,
+              map: map,
+              title: 'user position'
+          });
+
 
    },
     //contacts error fucntion
