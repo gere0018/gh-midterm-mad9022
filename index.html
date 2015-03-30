@@ -72,25 +72,23 @@
 
         </section>
     <!--overlay *********-->
-        <div data-role="overlay">&nbsp;</div>
-    <!--Modal Window *********-->
-        <div data-role="modal">
-            <h3>Contact Info</h3>
-            <form id = "contactInfoForm">
-                <input type="text" class = 'textInput' id="contactName" name="contactName"/>
-                <input type="text" class = 'textInput' id="contactPhoneNumbers"
-                       name="contactPhoneNumbers"/>
-                <input type="button" id="btnOk" value="OK" class="btn"/>
-
-            </form>
-          </div>
-      <!--msgBox *********-->
-        <div id = "msgBox">
-                 <p>This contact does not have a location. Double click on
-                     the map to identify the contact's location.</p>
-                 <input type="button" id="btnOk2" value="OK" class="btn"/>
-
+            <div data-role="overlay">
+                &nbsp;
             </div>
+        <!--Modal Window *********-->
+            <div data-role="modal">
+                <h3>Contact Info</h3><br>
+                    <p  id="contactName">Contact Name</p>
+                    <p  id="contactPhoneNumbers">Numbers on Device</p>
+                <button id="btnOk">Ok</button>
+              </div>
+          <!--msgBox *********-->
+            <div id = "msgBox">
+                     <p>This contact does not have a location. Double click on
+                         the map to identify the contact's location.</p>
+                     <button id="btnOk2">Ok</button>
+
+                </div>
 
 
   <!--Page # 2 Location *************************************************-->

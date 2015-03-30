@@ -192,11 +192,11 @@ svg {
 }
 [data-role=modal]{
   position:fixed;
-  top:23%;
+  top:17%;
   left:3%;
   width: 76%;
   z-index:15;
-  height: 25%;
+  height: 45%;
   padding:5vh;
   border:1px solid #333;
   color:#DBD1BF;
@@ -204,16 +204,11 @@ svg {
   box-shadow:1px 1px 2px rgb(0,0,0);
   display: none;
 }
-#contactInfoForm{
-    width: 100%;
-    height: 100%;
-
+[data-role=modal] p{
+  color:#DBD1BF;
 }
-.textInput{
-    width: 80%;
-    height: 13%;
-    margin: 5% 0;
-
+[data-role=modal] h3{
+    font-size: 1.5rem;
 }
 #backBtn{
     display: none;
@@ -222,11 +217,22 @@ svg {
     padding-left: 1rem;
 }
 
-
 #btnOk, #btnOk2{
-    width: 12%;
-    margin-top: 30px;
+    width: 20%;
+    height:20%;
+    margin-top: 20%;
     margin-left: 40%;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    background-color: #DBD1BF;
+    color: #3B628F;
+    font-family: "Roboto", "Georgia", sans-serif;
+}
+@media screen and (min-width: 500px){
+    #btnOk, #btnOk2{
+        margin-top: 6%;
+    }
+
 }
 #contactsMap{
     width: 96%;
@@ -234,15 +240,14 @@ svg {
     margin: 2%;
     z-index:20;
     border: 1px solid #3B628F;
-    display: none;
 }
 #msgBox{
   position:fixed;
-  top:23%;
+  top:20%;
   left:3%;
   width: 76%;
   z-index:15;
-  height: 25%;
+  height: 45%;
   padding:5vh;
   border:1px solid #333;
   background-color:#3B628F;
@@ -252,6 +257,7 @@ svg {
 #msgBox p{
   color:#DBD1BF;
 }
+
 
 /* Footer *********************************************************/
 .footer {
