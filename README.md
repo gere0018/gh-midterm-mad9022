@@ -1,2 +1,3 @@
 # mad9022-midterm
-Android app for the midterm of mad9022
+This is a gh page version of the midterm cordova app. Functionality is not fully fixed.
+complete functional project is midterm-mad9022
